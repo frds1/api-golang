@@ -19,10 +19,10 @@ WORKDIR /api-jogos-twitch
 
 RUN apk update --no-cache && \
     apk --no-cache add tzdata ca-certificates && \
-    adduser -D --uid 1000 desafio desafio 
+    adduser -D --uid 1000 api-jogos-twitch api-jogos-twitch 
 
-COPY --chown=desafio:desafio --from=builder /bin/api-jogos-twitchd .
+COPY --chown=api-jogos-twitch:api-jogos-twitch --from=builder /bin/api-jogos-twitchd .
 
 ENTRYPOINT /api-jogos-twitch/api-jogos-twitchd
 
-USER desafio
+USER api-jogos-twitch
