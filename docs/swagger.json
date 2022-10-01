@@ -1,0 +1,46 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/search": {
+            "post": {
+                "description": "This is the search endpoint\nand can continue over multiple lines",
+                "summary": "This is a search endpoint",
+                "parameters": [
+                    {
+                        "description": "The word to search a roman numeral",
+                        "name": "text",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/search.SearchRes"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "search.SearchRes": {
+            "type": "object",
+            "properties": {
+                "number": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

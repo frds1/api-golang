@@ -1,0 +1,30 @@
+definitions:
+  search.SearchRes:
+    properties:
+      number:
+        type: string
+      value:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /search:
+    post:
+      description: |-
+        This is the search endpoint
+        and can continue over multiple lines
+      parameters:
+      - description: The word to search a roman numeral
+        in: body
+        name: text
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/search.SearchRes'
+      summary: This is a search endpoint
+swagger: "2.0"
