@@ -1,18 +1,50 @@
 package main
 
 import (
-	"desafio/interfaces/search"
-	"desafio/interfaces/swagger"
+	config "api-jogos-twitch/config/database"
+	"api-jogos-twitch/interfaces/swagger"
+	"database/sql"
 
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
+	"go.uber.org/zap"
 )
 
 func main() {
+	var (
+		configuration config.Configurations
+		database      *sql.DB
+		erro          error
+	)
+
+	viper.SetConfigName("config")
+
+	viper.AddConfigPath(".")
+
+	viper.AutomaticEnv()
+
+	viper.SetConfigType("yml")
+
+	if erro = viper.ReadInConfig(); erro != nil {
+		zap.L().Error("Erro ao ler as configurações", zap.Error(erro))
+		return
+	}
+
+	if erro = viper.Unmarshal(&configuration); erro != nil {
+		zap.L().Error("Erro ao decodificar as configurações", zap.Error(erro))
+		return
+	}
+
+	if database, erro = config.AbrirConexao(configuration); erro != nil {
+		zap.L().Error("Erro ao abrir conexão com o banco de dados", zap.Error(erro))
+		return
+	}
+	defer database.Close()
+
 	router := gin.New()
 
 	r := router.Group("/")
-	search.Router(r)
 	swagger.Router(r)
 
-	router.Run(":8080")
+	router.Run(configuration.Server.Port)
 }
