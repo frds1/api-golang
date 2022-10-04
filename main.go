@@ -19,13 +19,13 @@ func main() {
 		erro          error
 	)
 
-	viper.SetConfigName("config")
+	viper.SetConfigName("dev")
 
 	viper.AddConfigPath(".")
 
 	viper.AutomaticEnv()
 
-	viper.SetConfigType("yml")
+	viper.SetConfigType("env")
 
 	if erro = viper.ReadInConfig(); erro != nil {
 		zap.L().Error("Erro ao ler as configurações", zap.Error(erro))
@@ -48,5 +48,5 @@ func main() {
 	r := router.Group("/")
 	swagger.Router(r)
 
-	log.Fatal(http.ListenAndServe(configuration.Server.Port, router))
+	log.Fatal(http.ListenAndServe(configuration.Port, router))
 }
