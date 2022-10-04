@@ -4,6 +4,8 @@ import (
 	config "api-jogos-twitch/config/database"
 	"api-jogos-twitch/interfaces/swagger"
 	"database/sql"
+	"log"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
@@ -46,5 +48,5 @@ func main() {
 	r := router.Group("/")
 	swagger.Router(r)
 
-	router.Run(configuration.Server.Port)
+	log.Fatal(http.ListenAndServe(configuration.Server.Port, router))
 }
