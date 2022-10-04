@@ -10,11 +10,11 @@ import (
 // AbrirConexao abre conexão com o banco de dados
 func AbrirConexao(configuration Configurations) (database *sql.DB, erro error) {
 	if database, erro = sql.Open("postgres",
-		"host="+configuration.Database.DBHost+
-			" port="+configuration.Database.DBPort+
-			" user="+configuration.Database.DBUser+
-			" password="+configuration.Database.DBPassword+
-			" dbname="+configuration.Database.DBName+
+		"host="+configuration.DBHost+
+			" port="+configuration.DBPort+
+			" user="+configuration.DBUser+
+			" password="+configuration.DBPassword+
+			" dbname="+configuration.DBName+
 			" sslmode=disable"); erro != nil {
 		return nil, oops.Err(erro)
 	}
