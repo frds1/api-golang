@@ -6,6 +6,7 @@ import (
 	"database/sql"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
@@ -47,6 +48,9 @@ func main() {
 
 	r := router.Group("/")
 	swagger.Router(r)
+
+	zap.L().Info(os.Getenv("PORT"))
+	zap.L().Info(configuration.Port)
 
 	log.Fatal(http.ListenAndServe(configuration.Port, router))
 }
